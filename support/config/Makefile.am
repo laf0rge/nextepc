@@ -7,6 +7,6 @@ configfiles = \
 	pcrf.conf \
 	$(NULL)
 
-configdir = ${sysconfdir}/nextepc
+configdir = ${docdir}/examples
 
 config_DATA = ${configfiles}

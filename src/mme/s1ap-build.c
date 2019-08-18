@@ -1398,9 +1398,13 @@ int s1ap_build_mme_configuration_transfer(
 
     SONConfigurationTransfer = &ie->value.choice.SONConfigurationTransfer;
 
+#if 0
     rv = s1ap_copy_ie(&asn_DEF_S1AP_SONConfigurationTransfer,
             son_configuration_transfer, SONConfigurationTransfer);
     ogs_assert(rv == OGS_OK);
+#else
+    memcpy(SONConfigurationTransfer, son_configuration_transfer, sizeof(*SONConfigurationTransfer));
+#endif
 
     rv = s1ap_encode_pdu(s1apbuf, &pdu);
     s1ap_free_pdu(&pdu);

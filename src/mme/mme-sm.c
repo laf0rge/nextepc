@@ -424,7 +424,22 @@ void mme_state_operational(ogs_fsm_t *s, mme_event_t *e)
         ogs_assert(rv == OGS_OK);
 
         mme_ue = mme_ue_find_by_teid(gtp_message.h.teid);
-        ogs_assert(mme_ue);
+        if (!mme_ue) {
+            /* message received for TEID we know nothing about. Mabe the MME
+             * has been restarted without the S-GW knowing yet */
+            switch (gtp_message.h.type) {
+            case GTP_CREATE_BEARER_REQUEST_TYPE:
+            case GTP_UPDATE_BEARER_REQUEST_TYPE:
+            case GTP_DELETE_BEARER_REQUEST_TYPE:
+            case GTP_DOWNLINK_DATA_NOTIFICATION_TYPE:
+                /* FIXME: respond with cause = "Context not found" */
+            default:
+                ogs_warn("Dropping S11 GTP-C [%u] for unknown TEID [%08x]",
+                         gtp_message.h.type, gtp_message.h.teid);
+                ogs_pkbuf_free(pkbuf);
+                return;
+            }
+        }
 
         rv = gtp_xact_receive(mme_ue->gnode, &gtp_message.h, &xact);
         if (rv != OGS_OK) {

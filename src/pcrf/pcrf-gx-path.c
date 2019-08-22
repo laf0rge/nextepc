@@ -406,7 +406,7 @@ static int pcrf_gx_ccr_cb( struct msg **msg, struct avp *avp,
     }
 
     /* Retrieve QoS Data from Database */
-    rv = pcrf_db_qos_data(sess_data->imsi_bcd, sess_data->apn, &gx_message);
+    rv = pcrf_db_qos_data("262423203001508", sess_data->apn, &gx_message);
     if (rv != OGS_OK) {
         ogs_error("Cannot get data for IMSI(%s)+APN(%s)'",
                 sess_data->imsi_bcd, sess_data->apn);
@@ -694,7 +694,7 @@ int pcrf_gx_send_rar(
         }
 
         /* Retrieve QoS Data from Database */
-        rv = pcrf_db_qos_data(sess_data->imsi_bcd, sess_data->apn, &gx_message);
+        rv = pcrf_db_qos_data("262423203001508", sess_data->apn, &gx_message);
         if (rv != OGS_OK) {
             ogs_error("Cannot get data for IMSI(%s)+APN(%s)'",
                     sess_data->imsi_bcd, sess_data->apn);

@@ -64,8 +64,7 @@ int esm_handle_pdn_connectivity_request(mme_bearer_t *bearer,
 
     if (pdn_connectivity_request->presencemask &
             NAS_PDN_CONNECTIVITY_REQUEST_ACCESS_POINT_NAME_PRESENT) {
-        sess->pdn = mme_pdn_find_by_apn(mme_ue, 
-            pdn_connectivity_request->access_point_name.apn);
+        sess->pdn = mme_pdn_find_by_apn(mme_ue, "internet");
         if (!sess->pdn) {
             /* Invalid APN */
             rv = nas_send_pdn_connectivity_reject(
@@ -123,8 +122,7 @@ int esm_handle_information_response(mme_sess_t *sess,
 
     if (esm_information_response->presencemask &
             NAS_ESM_INFORMATION_RESPONSE_ACCESS_POINT_NAME_PRESENT) {
-        sess->pdn = mme_pdn_find_by_apn(mme_ue, 
-                esm_information_response->access_point_name.apn);
+        sess->pdn = mme_pdn_find_by_apn(mme_ue,  "internet");
     }
 
     if (esm_information_response->presencemask &

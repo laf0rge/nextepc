@@ -211,8 +211,9 @@ int s1ap_send_to_nas(enb_ue_t *enb_ue,
     }
 
     if (enb_ue->mme_ue) {
-        ogs_assert(nas_security_decode(
-            enb_ue->mme_ue, security_header_type, nasbuf) == OGS_OK);
+        if (nas_security_decode(enb_ue->mme_ue, security_header_type, nasbuf) != OGS_OK) {
+	    return OGS_ERROR;
+	}
     }
 
     h = nasbuf->data;

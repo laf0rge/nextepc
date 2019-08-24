@@ -42,7 +42,7 @@ void mme_s6a_handle_aia(mme_ue_t *mme_ue, s6a_aia_message_t *aia_message)
     CLEAR_MME_UE_TIMER(mme_ue->t3460);
 
     rv = nas_send_authentication_request(mme_ue, e_utran_vector);
-    ogs_assert(rv == OGS_OK);
+    ogs_expect(rv == OGS_OK);
 }
 
 void mme_s6a_handle_ula(mme_ue_t *mme_ue, s6a_ula_message_t *ula_message)
